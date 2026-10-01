@@ -1,0 +1,92 @@
+
+        {/* Recent Certificates */}
+
+        <div className="mt-8 rounded-xl border bg-white">
+          <div className="flex items-center justify-between border-b px-6 py-5">
+            <div>
+              <h3 className="font-semibold text-gray-900">
+                Recent Certificates
+              </h3>
+
+              <p className="mt-1 text-sm text-gray-500">
+                Recently generated certificates
+              </p>
+            </div>
+
+            <button
+              onClick={() =>
+                navigate("/certificates")
+              }
+              className="text-sm font-medium text-gray-700 hover:text-black"
+            >
+              View all
+            </button>
+          </div>
+
+          {!data?.recentCertificates?.length ? (
+            <div className="px-6 py-12 text-center">
+              <FileText
+                size={40}
+                className="mx-auto text-gray-300"
+              />
+
+              <p className="mt-3 text-gray-500">
+                No certificates generated yet.
+              </p>
+
+              <button
+                onClick={() =>
+                  navigate("/automations/create")
+                }
+                className="mt-4 rounded-lg bg-black px-4 py-2 text-sm text-white"
+              >
+                Create your first automation
+              </button>
+            </div>
+          ) : (
+            <div className="divide-y">
+              {data.recentCertificates.map(
+                (certificate) => (
+                  <div
+                    key={certificate.id}
+                    className="flex items-center justify-between px-6 py-4"
+                  >
+                    <div>
+                      <p className="font-medium text-gray-900">
+                        {certificate.participantName}
+                      </p>
+
+                      <p className="text-sm text-gray-500">
+                        {certificate.email}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <span className="rounded-md bg-gray-100 px-2 py-1 text-xs uppercase">
+                        {certificate.format}
+                      </span>
+
+                      <span
+                        className={`rounded-full px-3 py-1 text-xs font-medium ${
+                          certificate.status ===
+                          "SENT"
+                            ? "bg-green-100 text-green-700"
+                            : certificate.status ===
+                              "FAILED"
+                            ? "bg-red-100 text-red-700"
+                            : "bg-yellow-100 text-yellow-700"
+                        }`}
+                      >
+                        {certificate.status}
+                      </span>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          )}
+        </div>
+      </main>
+    </div>
+  );
+};
